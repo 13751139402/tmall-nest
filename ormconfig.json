@@ -1,0 +1,12 @@
+{
+    "type": "mysql",
+    "host": "39.108.131.220",
+    "port": 3306,
+    "username": "root",
+    "password": "Dxw1437491371",
+    "database": "mall",
+    "entities": [
+        "dist/**/*.entity{.ts,.js}"
+    ],
+    "synchronize": false
+}
