@@ -7,6 +7,7 @@ import { goods_category } from './category.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([goods_category])], // 在此模板中注入存储库
   controllers: [CategoryController],
-  providers: [CategoryService]
+  providers: [CategoryService],
+  exports: [CategoryService],
 })
 export class CategoryModule { }

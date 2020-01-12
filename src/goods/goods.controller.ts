@@ -13,7 +13,6 @@ import { GoodsService } from './goods.service'
 export class GoodsController {
     constructor(private readonly GoodsService: GoodsService) { }
 
-
     @Get()
     findRoot() {
         return 'goods';
@@ -22,6 +21,11 @@ export class GoodsController {
     @Get('randGoods')
     randGoods(@Query() { num }) {
         return this.GoodsService.randGoods(num);
+    }
+
+    @Get('searchGoods')
+    searchGoods(@Query() { searchKey, pageNum, pageSize }) {
+        return this.GoodsService.searchGoods(searchKey, pageNum, pageSize);
     }
 
 }

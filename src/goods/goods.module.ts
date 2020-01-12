@@ -11,11 +11,12 @@ import { GoodsController } from './goods.controller';
 import { GoodsService } from './goods.service';
 import { CategoryModule } from './category/category.module';
 import { goods_spu } from './goods.entity';
+import { goods_category } from './category/category.entity'
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   controllers: [GoodsController],
-  providers: [GoodsService],
-  imports: [CategoryModule, TypeOrmModule.forFeature([goods_spu])]
+  providers: [GoodsService, CategoryModule],
+  imports: [CategoryModule, TypeOrmModule.forFeature([goods_spu, goods_category])]
 })
 export class GoodsModule { }
