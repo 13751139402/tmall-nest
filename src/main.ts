@@ -1,25 +1,29 @@
 /*
  * @Author: your name
  * @Date: 2020-01-02 10:10:18
- * @LastEditTime : 2020-01-10 16:15:02
+ * @LastEditTime : 2020-01-14 17:48:04
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\main.ts
  */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'; // 用于生成swagger描述文档
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.use(function (req, res, next) {
-    console.log(res);
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-  })
+  const appOptions = { cors: true }; // 设置跨域
+  const app = await NestFactory.create(AppModule, appOptions);
+
+  // DocumentBuilder 有助于构建符合 OpenAPI 规范的基础文档。它提供了几种允许设置诸如标题，描述，版本等属性的方法
+  const options = new DocumentBuilder()
+    .setTitle('Tmall Server')
+    .setDescription('The Realworld API description')
+    .setVersion('1.0')
+    // .addBearerAuth() // 如果要启用承载身份验证ApiBearerAuth,需要添加addBearerAuth安全定义
+    .build();
+  const document = SwaggerModule.createDocument(app, options); // 设置一个swagger模块
+  SwaggerModule.setup('/api', app, document); // 接口地址
+
   await app.listen(3000);
-  console.log(`listen3000:scuess`)
 }
 bootstrap();

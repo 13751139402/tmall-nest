@@ -1,7 +1,16 @@
+/*
+ * @Author: your name
+ * @Date: 2020-01-13 09:20:01
+ * @LastEditTime : 2020-01-14 16:04:03
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \tmall-nest\src\goods\goods.service.ts
+ */
 import { Injectable, } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { goods_spu } from './goods.entity'
 import { goods_category } from './category/category.entity'
+import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { Repository } from 'typeorm';
 
 
@@ -26,8 +35,23 @@ export class GoodsService {
         });
     }
 
-    async searchGoods(searchKey: string, pageNum: number, pageSize: number): Promise<any> {
-        let categoryId = await this.goodsCategory.find({ select: ['id'], where: { category_name: searchKey } });
-        return categoryId;
+    async searchGoods(searchKey: string, pageNum: number = 1, pageSize: number = 60): Promise<any> {
+        pageNum = Number(pageNum);
+        pageSize = Number(pageSize);
+        const categoryData = await (await this.goodsCategory.findOne({ select: ['id'], where: { category_name: searchKey } }));
+        if (!categoryData) {
+            return `喵~没找到与“ ${searchKey} ”相关的商品哦。`;
+        }
+        const goodsList = await this.goodsSpu.find({
+            where: {
+                category_id: categoryData.id,
+            },
+            skip: (pageNum - 1) * pageSize,
+            take: pageSize
+        })
+        if (!goodsList.length) {
+            return `喵~没找到与“ ${searchKey} ”相关的商品哦。`;
+        }
+        return goodsList;
     }
 }
