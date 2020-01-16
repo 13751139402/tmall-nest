@@ -6,8 +6,8 @@
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.entity.ts
  */
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { goods_category } from './category/category.entity'
 @Entity()
 export class goods_spu {
 
@@ -15,7 +15,7 @@ export class goods_spu {
     id: number;
 
     @Column({ length: 50 })
-    spu_no: string;
+    spu_no: string
 
     @Column()
     goods_name: string;
@@ -29,8 +29,8 @@ export class goods_spu {
     @Column()
     brand_id: string;
 
-    @Column()
-    category_id: number;
+    @ManyToOne(type => goods_category, goods_category => goods_category.spuId)
+    category: goods_category;
 
     @Column({ length: 50 })
     shop_id: string;

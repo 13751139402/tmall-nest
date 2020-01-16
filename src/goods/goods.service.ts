@@ -38,20 +38,27 @@ export class GoodsService {
     async searchGoods(searchKey: string, pageNum: number = 1, pageSize: number = 60): Promise<any> {
         pageNum = Number(pageNum);
         pageSize = Number(pageSize);
-        const categoryData = await (await this.goodsCategory.findOne({ select: ['id'], where: { category_name: searchKey } }));
-        if (!categoryData) {
-            return `喵~没找到与“ ${searchKey} ”相关的商品哦。`;
-        }
-        const goodsList = await this.goodsSpu.find({
-            where: {
-                category_id: categoryData.id,
-            },
-            skip: (pageNum - 1) * pageSize,
-            take: pageSize
-        })
-        if (!goodsList.length) {
-            return `喵~没找到与“ ${searchKey} ”相关的商品哦。`;
-        }
+        // const categoryData = await (await this.goodsCategory.findOne({ select: ['id'], where: { category_name: searchKey } }));
+        // if (!categoryData) {
+        //     return `喵~没找到与“ ${searchKey} ”相关的商品哦。`;
+        // }
+        // const goodsList = await this.goodsSpu.find({
+        //     join: {
+        //         alias: "shop_info",
+        //         leftJoinAndSelect: {
+        //             id: "shop_id",
+        //         }
+        //     },
+        //     where: {
+        //         category_id: categoryData.id,
+        //     },
+        //     skip: (pageNum - 1) * pageSize,
+        //     take: pageSize
+        // })
+        // if (!goodsList.length) {
+        //     return `喵~没找到与“ ${searchKey} ”相关的商品哦。`;
+        // }
+        let goodsList = await this.goodsCategory.find({ relations: ['goods_spu'] });
         return goodsList;
     }
 }
