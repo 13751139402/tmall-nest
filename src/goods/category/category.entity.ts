@@ -1,6 +1,13 @@
+/*
+ * @Author: your name
+ * @Date: 2020-01-17 09:37:03
+ * @LastEditTime : 2020-01-17 14:37:43
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \tmall-nest\src\goods\category\category.entity.ts
+ */
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, Tree, TreeChildren, TreeParent } from 'typeorm';
-import { goods_spu } from '../goods.entity'
-import { type } from 'os';
+import { goods_spu } from '../entity/goods.entity'
 @Entity()
 @Tree("closure-table")
 export class goods_category {
@@ -11,10 +18,10 @@ export class goods_category {
     @Column()
     category_name: string;
 
-    @Column()
+    @Column({ select: false })
     level: number;
 
-    @Column()
+    @Column({ select: false })
     picture: string;
 
     @TreeChildren()
@@ -24,5 +31,5 @@ export class goods_category {
     parent: goods_category;
 
     @OneToMany(type => goods_spu, goods_spu => goods_spu.category)
-    spuId: goods_spu[];
+    goods: goods_spu[];
 }

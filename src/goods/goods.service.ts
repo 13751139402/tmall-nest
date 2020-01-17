@@ -1,14 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2020-01-13 09:20:01
- * @LastEditTime : 2020-01-14 16:04:03
+ * @LastEditTime : 2020-01-17 15:04:16
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.service.ts
  */
 import { Injectable, } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { goods_spu } from './goods.entity'
+import { goods_spu } from './entity/goods.entity'
 import { goods_category } from './category/category.entity'
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { Repository } from 'typeorm';
@@ -38,27 +38,19 @@ export class GoodsService {
     async searchGoods(searchKey: string, pageNum: number = 1, pageSize: number = 60): Promise<any> {
         pageNum = Number(pageNum);
         pageSize = Number(pageSize);
-        // const categoryData = await (await this.goodsCategory.findOne({ select: ['id'], where: { category_name: searchKey } }));
-        // if (!categoryData) {
-        //     return `喵~没找到与“ ${searchKey} ”相关的商品哦。`;
-        // }
-        // const goodsList = await this.goodsSpu.find({
-        //     join: {
-        //         alias: "shop_info",
-        //         leftJoinAndSelect: {
-        //             id: "shop_id",
-        //         }
-        //     },
-        //     where: {
-        //         category_id: categoryData.id,
-        //     },
-        //     skip: (pageNum - 1) * pageSize,
-        //     take: pageSize
-        // })
-        // if (!goodsList.length) {
-        //     return `喵~没找到与“ ${searchKey} ”相关的商品哦。`;
-        // }
-        let goodsList = await this.goodsCategory.find({ relations: ['goods_spu'] });
-        return goodsList;
+        const goodsList = await this.goodsSpu.createQueryBuilder("goods")
+            .innerJoinAndSelect("goods.category", "category", "category.category_name = :searchKey", { searchKey })
+            .innerJoinAndSelect("goods.shop", "shop")
+            .skip((pageNum - 1) * pageSize)
+            .take(pageSize)
+            .select(['goods.id', 'goods.goods_name', 'goods.price', 'goods.cover', 'goods.shop_id', 'goods.turnover', 'shop.id', 'shop.shop_name'])
+            .getManyAndCount()
+        if (goodsList[1]) {
+            return goodsList;
+        } else {
+            return `喵~没找到与“ ${searchKey} ”相关的 商品 哦，要不您换个关键词我帮您再找找看`
+        }
+
+
     }
 }
