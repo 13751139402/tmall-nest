@@ -7,7 +7,7 @@
  * @FilePath: \tmall-nest\src\goods\goods.entity.ts
  */
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { goods_spu } from './goods.entity'
+import { goods_spu } from './goods_spu.entity'
 @Entity()
 export class shop_info {
 

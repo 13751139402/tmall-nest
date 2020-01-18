@@ -34,4 +34,9 @@ export class GoodsController {
         return this.GoodsService.searchGoods(searchKey, pageNum, pageSize);
     }
 
+    @Get('goodsDetails')
+    goodsDetails(@Query() { spu_id }) {
+        return this.GoodsService.goodsDetails(spu_id);
+    }
+
 }

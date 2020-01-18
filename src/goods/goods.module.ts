@@ -10,7 +10,7 @@ import { Module } from '@nestjs/common';
 import { GoodsController } from './goods.controller';
 import { GoodsService } from './goods.service';
 import { CategoryModule } from './category/category.module';
-import { goods_spu } from './entity/goods.entity';
+import { goods_spu } from './entity/goods_spu.entity';
 import { goods_category } from './category/category.entity'
 import { TypeOrmModule } from '@nestjs/typeorm';
 

@@ -7,7 +7,7 @@
  * @FilePath: \tmall-nest\src\goods\category\category.entity.ts
  */
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, Tree, TreeChildren, TreeParent } from 'typeorm';
-import { goods_spu } from '../entity/goods.entity'
+import { goods_spu } from '../entity/goods_spu.entity'
 @Entity()
 @Tree("closure-table")
 export class goods_category {
