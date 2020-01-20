@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-02 10:10:18
- * @LastEditTime : 2020-01-14 16:02:52
+ * @LastEditTime : 2020-01-20 16:27:39
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.controller.ts
@@ -12,7 +12,7 @@ import { GoodsService, } from './goods.service'
 import {
     ApiTags
 } from '@nestjs/swagger';
-import { SearchGoodsDto, randGoodsDto } from './dto'
+import { SearchGoodsDto, randGoodsDto, goodsDetailDto } from './dto'
 import { ValidationPipe } from '../shared/pipes/validation.pipe';
 
 
@@ -34,8 +34,9 @@ export class GoodsController {
         return this.GoodsService.searchGoods(searchKey, pageNum, pageSize);
     }
 
+    @UsePipes(new ValidationPipe())
     @Get('goodsDetails')
-    goodsDetails(@Query() { spu_id }) {
+    goodsDetails(@Query() { spu_id }: goodsDetailDto) {
         return this.GoodsService.goodsDetails(spu_id);
     }
 
