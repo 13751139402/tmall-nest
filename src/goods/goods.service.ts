@@ -54,7 +54,7 @@ export class GoodsService {
             .getManyAndCount()
         if (goodsList[1]) {
             goodsList[0] = shuffle(goodsList[0]);
-            return shuffle(goodsList);
+            return goodsList;
         } else {
             return `喵~没找到与“ ${searchKey} ”相关的 商品 哦，要不您换个关键词我帮您再找找看`
         }
