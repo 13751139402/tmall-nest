@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-13 09:20:01
- * @LastEditTime : 2020-01-21 15:00:34
+ * @LastEditTime : 2020-01-24 00:28:52
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.service.ts
@@ -62,7 +62,7 @@ export class GoodsService {
 
     async goodsDetails(spu_id: Number) {
 
-        const goodsDetails = await this.goodsSpu.findOne({ relations: ["spec", 'spec.values', 'shop', 'brand', 'preview'], where: { id: spu_id } });
+        const goodsDetails = await this.goodsSpu.findOne({ relations: ["spec", 'spec.values', 'shop', 'brand', 'preview','content'], where: { id: spu_id } });
         console.log(goodsDetails);
         return goodsDetails;
     }

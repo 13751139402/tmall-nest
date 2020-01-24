@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-10 13:40:50
- * @LastEditTime : 2020-01-24 00:34:37
+ * @LastEditTime : 2020-01-24 00:34:21
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.entity.ts
@@ -10,7 +10,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 't
 import { goods_spu } from './goods_spu.entity';
 
 @Entity()
-export class goods_spu_preview {
+export class goods_spu_content {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -19,7 +19,7 @@ export class goods_spu_preview {
     spu: goods_spu
 
     @Column()
-    img_url: string
+    image: string
 
     @Column({ select: false })
     index: string

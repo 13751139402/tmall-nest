@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-10 13:40:50
- * @LastEditTime : 2020-01-20 17:43:39
+ * @LastEditTime : 2020-01-24 00:25:20
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.entity.ts
@@ -12,6 +12,7 @@ import { shop_info } from './shop_info.entity'
 import { goods_spec } from "./goods_spec.entity";
 import { goods_brand } from "./goods_brand.entity";
 import { goods_spu_preview } from './goods_spu_preview.entity';
+import { goods_spu_content } from './goods_spu_content.entity';
 @Entity()
 export class goods_spu {
 
@@ -48,5 +49,8 @@ export class goods_spu {
 
     @OneToMany(type => goods_spu_preview, goods_spu_preview => goods_spu_preview.spu) // 1个spu 有多个preview,
     preview: goods_spu_preview[]; // 返回单个spu对应的多个preview,数组 
+
+    @OneToMany(type => goods_spu_content, goods_spu_content => goods_spu_content.spu) // 1个spu 有多个preview,
+    content: goods_spu_content[]; // 返回单个spu对应的多个preview,数组 
 
 }

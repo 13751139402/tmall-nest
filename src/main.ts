@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-02 10:10:18
- * @LastEditTime : 2020-01-14 17:48:04
+ * @LastEditTime : 2020-01-24 22:46:19
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\main.ts
@@ -19,7 +19,7 @@ async function bootstrap() {
     .setTitle('Tmall Server')
     .setDescription('The Realworld API description')
     .setVersion('1.0')
-    // .addBearerAuth() // 如果要启用承载身份验证ApiBearerAuth,需要添加addBearerAuth安全定义
+    .addBearerAuth() // 如果要启用承载身份验证ApiBearerAuth,需要添加addBearerAuth安全定义
     .build();
   const document = SwaggerModule.createDocument(app, options); // 设置一个swagger模块
   SwaggerModule.setup('/api', app, document); // 接口地址
