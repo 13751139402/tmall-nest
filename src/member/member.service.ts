@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-11 22:30:40
- * @LastEditTime : 2020-01-24 23:08:20
+ * @LastEditTime : 2020-01-25 18:05:09
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\member\member.service.ts
@@ -35,7 +35,7 @@ export class MemberService {
     async findById(id: number): Promise<UserRO> {
         const user = await this.memberRepository.findOne({ where: { id } });
         if (!user) {
-            const errors = { User: '用户数据没有找到' };
+            const errors = { message: '用户数据没有找到' };
             throw new HttpException({ errors }, 401);
         };
 

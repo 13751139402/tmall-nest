@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-11 22:30:40
- * @LastEditTime : 2020-01-24 23:06:47
+ * @LastEditTime : 2020-01-25 18:11:21
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\member\member.controller.ts
@@ -43,9 +43,9 @@ export class MemberController {
     async login(@Body() loginUserDto: LoginUserDto): Promise<UserRO> {
         const _user = await this.MemberService.findOne(loginUserDto);
 
-        const errors = { User: ' not found' };
+        const User = { User: '用户登录失败' };
         if (!_user) {
-            throw new HttpException({ errors }, 401)
+            throw new HttpException({ User }, 401)
         }
 
         const token = await this.MemberService.generateJWT(_user); // 将取出的token转化为token
