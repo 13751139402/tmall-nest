@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-24 17:46:26
- * @LastEditTime : 2020-01-25 18:03:00
+ * @LastEditTime : 2020-01-29 14:14:10
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\member\dto\login-user.dto.ts
@@ -17,7 +17,7 @@ export class LoginUserDto {
   })
   @IsNotEmpty()
   @IsString()
-  account: string;
+  username: string;
 
   @ApiProperty({
     default: '123456',

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-10 13:40:50
- * @LastEditTime : 2020-01-17 14:51:33
+ * @LastEditTime : 2020-02-02 23:33:42
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.entity.ts
@@ -12,7 +12,7 @@ import { goods_spec_value } from './goods_spec_value.entity'
 @Entity()
 export class goods_spec {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({ type: 'bigint' })
     id: number;
 
     @Column()

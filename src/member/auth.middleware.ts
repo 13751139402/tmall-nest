@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-24 09:31:40
- * @LastEditTime : 2020-01-24 17:19:28
+ * @LastEditTime : 2020-01-29 16:29:11
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \nestjs-realworld-example-app\src\user\auth.middleware.ts
@@ -10,7 +10,6 @@ import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { NestMiddleware, HttpStatus, Injectable } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken'; // 跨域认证
-import { SECRET } from '../config';
 import { MemberService } from './member.service';
 
 // ------------跨域认证
@@ -38,7 +37,7 @@ export class AuthMiddleware implements NestMiddleware { // 自定义中间键 �
             // 如果token解析失败或者token已经过期，则都会返回err，只有正确解析出用户数据才会返回data
             let decoded: any = {};
             try {
-                decoded = jwt.verify(token, SECRET); // token服务器下发浏览器时通过密钥加密，此处密钥核实，防止浏览器数据篡改
+                decoded = jwt.verify(token, process.env.SECERT); // token服务器下发浏览器时通过密钥加密，此处密钥核实，防止浏览器数据篡改
             } catch (error) {
                 throw new HttpException('TOKEN认证失败', HttpStatus.UNAUTHORIZED); // 没有则报错
             }

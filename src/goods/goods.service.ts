@@ -1,14 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2020-01-13 09:20:01
- * @LastEditTime : 2020-01-24 00:28:52
+ * @LastEditTime : 2020-02-01 16:37:31
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.service.ts
  */
 import { Injectable, } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { goods_spu, goods_category } from './entity';
+import { goods_spu, goods_sku } from './entity';
 import { shuffle } from '../util'
 import { Repository } from 'typeorm';
 
@@ -18,8 +18,8 @@ export class GoodsService {
     constructor(
         @InjectRepository(goods_spu) // 将已注册的entity注入到service中 // 修饰器将entity修饰注入到类中
         private readonly goodsSpu: Repository<goods_spu>, // 接口规定了返回数据的类型
-        @InjectRepository(goods_category) // 将已注册的entity注入到service中 // 修饰器将entity修饰注入到类中
-        private readonly goodsCategory: Repository<goods_category>, // 接口规定了返回数据的类型
+        @InjectRepository(goods_sku)
+        private readonly goodsSku: Repository<goods_sku>,
 
     ) { }
 
@@ -60,10 +60,44 @@ export class GoodsService {
         }
     }
 
+    /**
+     * @description: 查找商品详情数据
+     * @param {type} 
+     * @return: 
+     */
     async goodsDetails(spu_id: Number) {
 
-        const goodsDetails = await this.goodsSpu.findOne({ relations: ["spec", 'spec.values', 'shop', 'brand', 'preview','content'], where: { id: spu_id } });
-        console.log(goodsDetails);
+        const goodsDetails = await this.goodsSpu.findOne({ relations: ["spec", 'spec.values', 'shop', 'brand', 'preview', 'content'], where: { id: spu_id } });
+
         return goodsDetails;
+    }
+
+    /**
+     * @description: 找到spu中的用户选择的sku
+     * @param {
+     *  spuId
+     *  specData
+     *  } 
+     * @return: 
+     */
+    async findSku(spuId, specData) {
+        const skuList = await this.goodsSku.createQueryBuilder("sku")
+            .where("sku.spuId = :spuId", { spuId })
+            .innerJoinAndSelect("sku.specValue", "specValue")
+            .getMany();
+        for (let index = 0; index < specData.length; index++) {
+            const param = specData[index];
+            for (let index = 0; index < skuList.length; index++) {
+                const { specValue } = skuList[index];
+                let choose = specValue.some(function ({ id }) {
+                    return id === param;
+                });
+                if (!choose) {
+                    skuList.splice(index, 1);
+                    index--;
+                }
+            }
+        }
+        return skuList;
     }
 }

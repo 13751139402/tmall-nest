@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-11 22:30:40
- * @LastEditTime : 2020-01-25 18:05:09
+ * @LastEditTime : 2020-02-02 10:28:26
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\member\member.service.ts
@@ -12,7 +12,6 @@ import { Repository, getRepository, DeleteResult } from 'typeorm';
 import { member_info } from './entity/member_info.entity';
 import { CreateUserDto, LoginUserDto, UpdateUserDto } from './dto';
 const jwt = require('jsonwebtoken');
-import { SECRET } from '../config';
 import { UserRO } from './member.interface';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
@@ -51,7 +50,6 @@ export class MemberService {
 
         // 检查 手机号/名字 的唯一性
         const { name, mobile_number, password } = dto;
-        console.log(name, mobile_number, password)
         const qb = await this.memberRepository
             .createQueryBuilder('user')
             .where('user.name = :name', { name })
@@ -86,12 +84,12 @@ export class MemberService {
      * @param {type} 
      * @return: 
      */
-    async findOne({ account, password }: LoginUserDto): Promise<member_info> {
+    async findOne({ username, password }: LoginUserDto): Promise<member_info> {
         // crypto.createHmac(‘sha256’,'密钥') 方法用于创建 Hmac 实例
         // hmac.digest :返回值
         // 数据库的密码通过hmac加密,密钥为真正的密，数据库只能看到加密的数据，只有用户能解密，用户知道密钥===密码
         password = crypto.createHmac('sha256', password).digest('hex');
-        return await this.memberRepository.findOne({ where: [{ name: account, password }, { mobile_number: account, password }, { mailbox: account, password }] });
+        return await this.memberRepository.findOne({ where: [{ name: username, password }, { mobile_number: username, password }, { mailbox: username, password }] });
     }
     /**
     * @description: 生产JWT数据(token),数据通过SECRET加密,包含私有数据id,username,mobile_number
@@ -102,14 +100,13 @@ export class MemberService {
         let today = new Date();
         let exp = new Date(today);
         exp.setDate(today.getDate() + 60);
-
         return jwt.sign({
             id: user.id,
             name: user.name,
             mobile_number: user.mobile_number,
             mailbox: user.mailbox,
             exp: exp.getTime() / 1000, // 设置有效期
-        }, SECRET); // SECRET加密
+        }, process.env.SECRET); // SECRET加密
     };
 
     /**
@@ -117,8 +114,9 @@ export class MemberService {
      * @param {type} 
      * @return: 
      */
-    private buildUserRO(user: member_info) {
+    buildUserRO(user: member_info) {
         const userRO = {
+            id: user.id,
             name: user.name,
             mailbox: user.mailbox,
             mobile_number: user.mobile_number,
@@ -134,7 +132,7 @@ export class MemberService {
      * @param {type} 
      * @return: 
      */
-    private buildError(errors) {
+    buildError(errors) {
         const result = {};
         errors.forEach(el => {
             let prop = el.property;

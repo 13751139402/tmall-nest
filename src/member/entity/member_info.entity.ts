@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-24 15:46:55
- * @LastEditTime : 2020-01-24 17:35:37
+ * @LastEditTime : 2020-01-29 14:17:58
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\member\entity\member_info.entity.ts

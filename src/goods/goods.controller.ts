@@ -1,18 +1,18 @@
 /*
  * @Author: your name
  * @Date: 2020-01-02 10:10:18
- * @LastEditTime : 2020-01-20 16:27:39
+ * @LastEditTime : 2020-01-31 14:36:23
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.controller.ts
  */
-import { Controller, Get, Query, UsePipes } from '@nestjs/common';
+import { Controller, Get, Query, UsePipes, Post, Body } from '@nestjs/common';
 import { GoodsService, } from './goods.service'
 
 import {
     ApiTags
 } from '@nestjs/swagger';
-import { SearchGoodsDto, randGoodsDto, goodsDetailDto } from './dto'
+import { SearchGoodsDto, randGoodsDto, goodsDetailDto,findSkuDto } from './dto'
 import { ValidationPipe } from '../shared/pipes/validation.pipe';
 
 
@@ -40,4 +40,8 @@ export class GoodsController {
         return this.GoodsService.goodsDetails(spu_id);
     }
 
-}
+    @Post('findSku')
+    findSku(@Body() { spuId, specData }: findSkuDto) {
+        return this.GoodsService.findSku(spuId, specData);
+    }
+} 1
