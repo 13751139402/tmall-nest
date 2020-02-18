@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-10 13:40:50
- * @LastEditTime : 2020-02-02 23:34:40
+ * @LastEditTime : 2020-02-04 19:36:24
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.entity.ts
@@ -16,7 +16,6 @@ export class goods_spu_content {
     id: number;
 
     @ManyToOne(type => goods_spu, goods_spu => goods_spu.content)
-    @Column({ type: 'bigint' })
     spu: goods_spu
 
     @Column({ type: 'text' })

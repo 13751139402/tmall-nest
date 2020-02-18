@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-17 09:37:03
- * @LastEditTime : 2020-01-17 14:37:43
+ * @LastEditTime : 2020-02-04 12:37:11
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\category\category.entity.ts
@@ -18,10 +18,10 @@ export class goods_category {
     @Column()
     category_name: string;
 
-    @Column({ select: false })
+    @Column({ select: false, nullable: true })
     level: number;
 
-    @Column({ select: false })
+    @Column({ select: false, nullable: true })
     picture: string;
 
     @TreeChildren()

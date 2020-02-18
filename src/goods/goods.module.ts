@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-02 10:10:18
- * @LastEditTime : 2020-02-01 14:54:19
+ * @LastEditTime : 2020-02-04 19:33:36
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.module.ts
@@ -16,6 +16,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   controllers: [GoodsController],
   providers: [GoodsService, CategoryModule],
-  imports: [CategoryModule, TypeOrmModule.forFeature([goods_spu, goods_sku, goods_spec_value])]
+  imports: [TypeOrmModule.forFeature([goods_spu, goods_sku, goods_spec_value])]
 })
 export class GoodsModule { }

@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-01-14 13:42:07
- * @LastEditTime : 2020-02-01 18:24:53
+ * @LastEditTime : 2020-02-04 21:55:52
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Editx
  * @FilePath: \tmall-nest\src\goods\dto\searchGoods.dto.ts
  */
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNumberString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumberString, IsNumber } from 'class-validator';
 
 export class addShopCartDto {
     @ApiProperty({
@@ -16,22 +16,22 @@ export class addShopCartDto {
             description: '商品spuId'
         },
     })
-    @IsNumberString()
+    @IsNotEmpty()
     spuId: string
 
     @ApiProperty({
         default: '10006493',
         description: '商品skuId'
     })
-    @IsNumberString()
+    @IsNotEmpty()
     skuId: string;
 
     @ApiProperty({
         default: '6',
         description: '用户Id'
     })
-    @IsNumberString()
-    member_Id: string;
+    @IsNotEmpty()
+    memberId: string;
 
     @ApiProperty({
         default: 1,

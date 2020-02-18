@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-18 20:15:53
- * @LastEditTime : 2020-02-02 23:32:30
+ * @LastEditTime : 2020-02-05 19:27:55
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\entity\goods_spec_value.entity.ts
@@ -16,11 +16,11 @@ export class goods_spec_value {
     id: number;
 
     @ManyToOne(type => goods_spec, goods_spec => goods_spec.values)
-    spec: number
+    spec: goods_spec
 
     @Column({ length: 50 })
     spec_value: string
 
-    @Column({ length: 255 })
+    @Column({ length: 255, nullable: true })
     spec_value_cover: string
 }

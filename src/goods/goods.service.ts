@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2020-01-13 09:20:01
- * @LastEditTime : 2020-02-01 16:37:31
- * @LastEditors  : Please set LastEditors
+ * @LastEditTime: 2020-02-18 11:39:31
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\goods\goods.service.ts
  */
@@ -56,7 +56,7 @@ export class GoodsService {
             goodsList[0] = shuffle(goodsList[0]);
             return goodsList;
         } else {
-            return `喵~没找到与“ ${searchKey} ”相关的 商品 哦，要不您换个关键词我帮您再找找看`
+            return false;
         }
     }
 
