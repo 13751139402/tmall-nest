@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-11 22:30:40
- * @LastEditTime: 2020-02-18 10:26:43
+ * @LastEditTime: 2020-02-18 15:36:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\order\order.service.ts
@@ -228,5 +228,12 @@ export class OrderService {
         }
         let countList = await Promise.all(count)
         return [list, countList];
+    }
+
+    async payOrder(orderList = []) {
+        await this.orderInfo.update(orderList, {
+            status: 2
+        })
+        return true;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-11 22:30:40
- * @LastEditTime : 2020-02-14 15:25:18
+ * @LastEditTime: 2020-02-18 15:24:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tmall-nest\src\order\order.controller.ts
@@ -15,10 +15,12 @@ import {
     Delete,
     Param,
     Query,
+    Put,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import {
     addShopCartDto,
+    payOrderDto,
     changeGoodsCountDto,
     deleteGoodsDto,
     confirmOrderDto,
@@ -94,7 +96,12 @@ export class OrderController {
     @UsePipes(new ValidationPipe())
     @Get('findOrder')
     async findOrder(@member('id') userId: number, @Query() { status, pageSkip, pageTake }: findOrderDto) {
-        console.log(userId, status);
         return await this.OrderService.findOrder(userId, status, pageSkip, pageTake);
+    }
+
+    @UsePipes(new ValidationPipe())
+    @Put('payOrder')
+    async payOrder(@member('id') userId: number, @Body() { orderList }: payOrderDto) {
+        return await this.OrderService.payOrder(orderList);
     }
 }

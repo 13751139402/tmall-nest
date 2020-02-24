@@ -11,3 +11,4 @@ export { changeGoodsCountDto } from './changeGoodsCount.dto';
 export { deleteGoodsDto } from './deleteGoods.dto';
 export { confirmOrderDto } from './confirmOrder.dto';
 export { findOrderDto } from './findOrder.dto';
+export { payOrderDto } from './payOrder.dto';
